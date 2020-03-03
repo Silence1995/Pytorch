@@ -3,8 +3,8 @@
 ### Image Classification
 
 Using VGG & Resnet in PyTorch <b>torchvision.models</b>, and train CIFAR10 dataset for image classification
-    - models.vgg11()
-    - models.resnet18()
+
+
 - image_classification.ipynb
     - the notebook is using GPU on <b>Google colab</b>
 
@@ -48,8 +48,7 @@ Using Pre-trained Faster RCNN in PyTorch <b>torchvision.models.detection</b> for
  
 | Image | Video |
 |:-----:|:-----:|
-|   <img src="https://github.com/Silence1995/Pytorch/blob/master/figure/object_detection.JPG" width="200" height="300" />    | [<img src="https://github.com/Silence1995/Pytorch/blob/master/figure/object_detection_video.JPG"  width="200" height="300" >](https://drive.google.com/file/d/1KNA_cTJh8C-tvww7oN8UsnDjCUyHWxsY/view?usp=sharing)
-      |
+|   <img src="https://github.com/Silence1995/Pytorch/blob/master/figure/object_detection.JPG" width="200" height="300" />    | [<img src="https://github.com/Silence1995/Pytorch/blob/master/figure/object_detection_video.JPG"  width="200" height="300" >](https://drive.google.com/file/d/1KNA_cTJh8C-tvww7oN8UsnDjCUyHWxsY/view?usp=sharing)|
 
 
 ### Reference
