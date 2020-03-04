@@ -53,4 +53,5 @@ Using Pre-trained Faster RCNN in PyTorch <b>torchvision.models.detection</b> for
 
 ### Reference
 - [Faster R-CNN](https://zhuanlan.zhihu.com/p/93829453)
-- [TRAINING A CLASSIFIER](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html)
+- [Classfier Tutorial](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html)
+- [Instance-Segmentation Tutorial](https://www.learnopencv.com/mask-r-cnn-instance-segmentation-with-pytorch/)
