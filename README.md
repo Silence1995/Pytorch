@@ -21,21 +21,21 @@ Using VGG & Resnet in PyTorch <b>torchvision.models</b>, and train CIFAR10 datas
 
         |   Model  | Accuracy |
         |:--------:|:--------:|
-        |   [VGG16](https://arxiv.org/abs/1409.1556)  |         |
+        |   [VGG16](https://arxiv.org/abs/1409.1556)  |  85 %       |
         | [ResNet18](https://arxiv.org/abs/1512.03385)  |    80 %      |
     - Accuracy for each class
         |       | VGG16 | Resnet18 |
         |:-----:|-------|----------|
-        | plane |       | 86 %  |
-        |  car  |       | 85 %  |
-        |  bird |       | 75 %  |
-        |  cat  |       | 58 %  |
-        |  deer |       | 88 %  |
-        |  dog  |       | 72 %  |
-        |  frog |       | 83 %  |
-        | horse |       | 92 %  |
-        | ship  |       | 96 %  |
-        | truck  |      | 87 %  |
+        | plane |  82 % | 86 %     |
+        |  car  | 100 % | 85 %    |
+        |  bird |    90 %   | 75 %  |
+        |  cat  |    58 %   | 58 %  |
+        |  deer |    85 %    | 88 %  |
+        |  dog  |   84 %    | 72 %  |
+        |  frog |   86 %    | 83 %  |
+        | horse |    76 %   | 92 %  |
+        | ship  |     96 %   | 96 %  |
+        | truck  |    89 %  | 87 %  |
 
 ### Object Detection
 
