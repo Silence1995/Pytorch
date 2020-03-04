@@ -50,8 +50,12 @@ Using Pre-trained Faster RCNN in PyTorch <b>torchvision.models.detection</b> for
 |:-----:|:-----:|
 |   <img src="https://github.com/Silence1995/Pytorch/blob/master/figure/object_detection.JPG" width="200" height="300" />    | [<img src="https://github.com/Silence1995/Pytorch/blob/master/figure/object_detection_video.JPG"  width="200" height="300" >](https://drive.google.com/file/d/1KNA_cTJh8C-tvww7oN8UsnDjCUyHWxsY/view?usp=sharing)|
 
+### Instance Segmentation
+
+Using Pre-trained Mask RCNN in PyTorch <b>torchvision.models.detection</b> for instance segmentation
+
 
 ### Reference
-- [Faster R-CNN](https://zhuanlan.zhihu.com/p/93829453)
+- [Faster R-CNN Tutorial](https://zhuanlan.zhihu.com/p/93829453)
 - [Classfier Tutorial](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html)
 - [Instance-Segmentation Tutorial](https://www.learnopencv.com/mask-r-cnn-instance-segmentation-with-pytorch/)
