@@ -58,7 +58,7 @@ Using Pre-trained Mask RCNN in PyTorch <b>torchvision.models.detection</b> for i
 
 | Image | Video |
 |:-----:|:-----:|
-|      |       |
+|  <img src="https://github.com/Silence1995/Pytorch/blob/master/figure/instance_segmentation.JPG" width="200" height="300" />    |       |
 
 ### Reference
 - [Faster R-CNN Tutorial](https://zhuanlan.zhihu.com/p/93829453)
