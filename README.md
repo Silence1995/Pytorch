@@ -21,21 +21,21 @@ Using VGG & Resnet in PyTorch <b>torchvision.models</b>, and train CIFAR10 datas
 
         |   Model  | Accuracy |
         |:--------:|:--------:|
-        |   [VGG16](https://arxiv.org/abs/1409.1556)  |         |
+        |   [VGG16](https://arxiv.org/abs/1409.1556)  |  85 %       |
         | [ResNet18](https://arxiv.org/abs/1512.03385)  |    80 %      |
     - Accuracy for each class
         |       | VGG16 | Resnet18 |
         |:-----:|-------|----------|
-        | plane |       | 86 %  |
-        |  car  |       | 85 %  |
-        |  bird |       | 75 %  |
-        |  cat  |       | 58 %  |
-        |  deer |       | 88 %  |
-        |  dog  |       | 72 %  |
-        |  frog |       | 83 %  |
-        | horse |       | 92 %  |
-        | ship  |       | 96 %  |
-        | truck  |      | 87 %  |
+        | plane |  82 % | 86 %     |
+        |  car  | 100 % | 85 %    |
+        |  bird |    90 %   | 75 %  |
+        |  cat  |    58 %   | 58 %  |
+        |  deer |    85 %    | 88 %  |
+        |  dog  |   84 %    | 72 %  |
+        |  frog |   86 %    | 83 %  |
+        | horse |    76 %   | 92 %  |
+        | ship  |     96 %   | 96 %  |
+        | truck  |    89 %  | 87 %  |
 
 ### Object Detection
 
@@ -50,7 +50,17 @@ Using Pre-trained Faster RCNN in PyTorch <b>torchvision.models.detection</b> for
 |:-----:|:-----:|
 |   <img src="https://github.com/Silence1995/Pytorch/blob/master/figure/object_detection.JPG" width="200" height="300" />    | [<img src="https://github.com/Silence1995/Pytorch/blob/master/figure/object_detection_video.JPG"  width="200" height="300" >](https://drive.google.com/file/d/1KNA_cTJh8C-tvww7oN8UsnDjCUyHWxsY/view?usp=sharing)|
 
+### Instance Segmentation
+
+Using Pre-trained Mask RCNN in PyTorch <b>torchvision.models.detection</b> for instance segmentation
+- instance_segmentation_image.ipynb
+    - the notebook is for image and the workflow for the instance_segmentation
+
+| Image | Video |
+|:-----:|:-----:|
+|      |       |
 
 ### Reference
-- [Faster R-CNN](https://zhuanlan.zhihu.com/p/93829453)
-- [TRAINING A CLASSIFIER](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html)
+- [Faster R-CNN Tutorial](https://zhuanlan.zhihu.com/p/93829453)
+- [Classfier Tutorial](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html)
+- [Instance-Segmentation Tutorial](https://www.learnopencv.com/mask-r-cnn-instance-segmentation-with-pytorch/)
