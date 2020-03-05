@@ -5,8 +5,9 @@ import numpy as np
 import torchvision.transforms as T
 import random
 
-model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
+model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True)
 model.eval()
+
 
 COCO_INSTANCE_CATEGORY_NAMES = [
     '__background__', 'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus',
@@ -35,29 +36,46 @@ def  generate_color():
         b = random.randint(80,255)
         COLORS.append((r,g,b)) 
 
-
-def get_prediction(frame, threshold):
-
-    img = Image.fromarray(frame)
+def colour_masks(image,pred_cls):
+    r = np.zeros_like(image).astype(np.uint8)
+    g = np.zeros_like(image).astype(np.uint8)
+    b = np.zeros_like(image).astype(np.uint8)
+ 
+    r[image == 1], g[image == 1], b[image == 1] = list(CATEGORY_COLOR[pred_cls])
+    coloured_mask = np.stack([r, g, b], axis=2)
     
-    transform = T.Compose([T.ToTensor()]) # Defing PyTorch Transform
-    img = transform(img) # Apply the transform to the image
-    pred = model([img]) # Pass the image to the model
+    return coloured_mask
+
+def get_prediction(img, threshold):
     
-    pred_class = [COCO_INSTANCE_CATEGORY_NAMES[i] for i in list(pred[0]['labels'].numpy())] # Get the Prediction Score
-    pred_boxes = [[(i[0], i[1]), (i[2], i[3])] for i in list(pred[0]['boxes'].detach().numpy())] # Bounding boxes
+    img = Image.fromarray(img)#＃From numpy array to PIL image
+
+    transform = T.Compose([T.ToTensor()])#the image is converted to image tensor using PyTorch’s Transforms
+    img = transform(img)
+    pred = model([img])#mage is passed through the model to get the predictions
+    
+    # prediction classes and bounding box coordinates are obtained from the model 
+    # soft masks are made binary(0 or 1) ie: eg. segment of cat is made 1 and rest of the image is made 0
+
     pred_score = list(pred[0]['scores'].detach().numpy())
+    pred_t = [pred_score.index(x) for x in pred_score if x>threshold][-1]
+
+    masks = (pred[0]['masks']>0.5).squeeze().detach().cpu().numpy()
     
-    pred_t = [pred_score.index(x) for x in pred_score if x > threshold][-1] # Get list of index with score greater than threshold.
+    pred_class = [COCO_INSTANCE_CATEGORY_NAMES[i] for i in list(pred[0]['labels'].numpy())]
+    pred_boxes = [[(i[0], i[1]), (i[2], i[3])] for i in list(pred[0]['boxes'].detach().numpy())]
+    
+    masks = masks[:pred_t+1]
     pred_boxes = pred_boxes[:pred_t+1]
     pred_class = pred_class[:pred_t+1]
     
-    return pred_boxes, pred_class
+    return masks, pred_boxes, pred_class
 
 
-def video_object_detection_api(video_path, threshold=0.5, rect_th=3, text_size=3, text_th=3):
+
+def video_instance_segmentation_api(video_path, threshold=0.5, rect_th=3, text_size=3, text_th=3):
     
-
+  
     cap = cv2.VideoCapture(video_path)
 
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -67,40 +85,53 @@ def video_object_detection_api(video_path, threshold=0.5, rect_th=3, text_size=3
     print('Total number of frames = ' + str(total_frame))
   
     
-    
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
-
 
 
     # Creat VideoWriter , Output to  output.avi
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
     out = cv2.VideoWriter('output.avi', fourcc, fps, (frame_width, frame_height))
-    
+
+
     while(cap.isOpened()):
         current_frame = int(cap.get(cv2.CAP_PROP_POS_FRAMES))
-        print('current frame:', current_frame, flush=True)
+        print('current frame/total frame=', current_frame,"/",total_frame, flush=True)
         ret, frame = cap.read()
-        boxes, pred_cls = get_prediction(frame, threshold) # Get predictions
+        masks, boxes, pred_cls = get_prediction(frame, threshold)# Get predictions
         img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) # Convert to RGB
 
-        for i in range(len(boxes)):
-            cv2.rectangle(frame, boxes[i][0], boxes[i][1],color=CATEGORY_COLOR[pred_cls[i]], thickness=rect_th) # Draw Rectangle with the coordinates
+        for i in range(len(masks)):
+
+            cv2.rectangle(img, boxes[i][0], boxes[i][1],color=CATEGORY_COLOR[pred_cls[i]], thickness=rect_th)        
             text_width, text_height = cv2.getTextSize(pred_cls[i],cv2.FONT_HERSHEY_DUPLEX, text_size,thickness=text_th)[0]
             cv2.rectangle(img,  boxes[i][0],  (int(boxes[i][0][0]+text_width), int(boxes[i][0][1]-text_height)), CATEGORY_COLOR[pred_cls[i]], cv2.FILLED)
             cv2.putText(img,pred_cls[i], boxes[i][0], cv2.FONT_HERSHEY_DUPLEX, text_size, (255,255,255), thickness=text_th)
 
+
+            rgb_mask = colour_masks(masks[i],pred_cls[i])
+            img = cv2.addWeighted(img, 1, rgb_mask, 0.9, 0)
+    
         out.write(frame)
 
         # cv2.namedWindow('Faster RCNN',cv2.WINDOW_NORMAL)
         # cv2.resizeWindow('Faster RCNN', 300,600)
         # cv2.imshow('Faster RCNN',frame)
-        
+
         if cv2.waitKey(1) & 0xFF == ord('q') or total_frame == current_frame:
             break
 
     cap.release()
     cv2.destroyAllWindows()
+
+
+    
+   
+
+
+
+
+
 
 if __name__ == '__main__':
 
@@ -108,6 +139,6 @@ if __name__ == '__main__':
 
     CATEGORY_COLOR = dict(zip(COCO_INSTANCE_CATEGORY_NAMES, COLORS))
     
-    video_object_detection_api('test.mp4', threshold=0.9, rect_th=5, text_size=1, text_th=3)
+    video_instance_segmentation_api('test.mp4', threshold=0.9, rect_th=5, text_size=1, text_th=3)
 
     print('Done')
