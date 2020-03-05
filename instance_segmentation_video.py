@@ -31,9 +31,9 @@ def  generate_color():
 
     number_of_category=len(COCO_INSTANCE_CATEGORY_NAMES )
     for i in range(number_of_category):
-        r = random.randint(60,255)
-        g = random.randint(70,255)
-        b = random.randint(80,255)
+        r = random.randint(50,250)
+        g = random.randint(150,200)
+        b = random.randint(100,150)
         COLORS.append((r,g,b)) 
 
 def colour_masks(image,pred_cls):
@@ -56,6 +56,9 @@ def get_prediction(img, threshold):
     
     # prediction classes and bounding box coordinates are obtained from the model 
     # soft masks are made binary(0 or 1) ie: eg. segment of cat is made 1 and rest of the image is made 0
+
+
+
 
     pred_score = list(pred[0]['scores'].detach().numpy())
     pred_t = [pred_score.index(x) for x in pred_score if x>threshold][-1]
@@ -91,26 +94,34 @@ def video_instance_segmentation_api(video_path, threshold=0.5, rect_th=3, text_s
 
     # Creat VideoWriter , Output to  output.avi
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter('output.avi', fourcc, fps, (frame_width, frame_height))
+    out = cv2.VideoWriter('output2.avi', fourcc, fps, (frame_width, frame_height))
 
 
     while(cap.isOpened()):
+
+
         current_frame = int(cap.get(cv2.CAP_PROP_POS_FRAMES))
-        print('current frame/total frame=', current_frame,"/",total_frame, flush=True)
+        
+        if  total_frame == current_frame:
+            break
+
+
+
+        print('current/total=', current_frame,"/",total_frame, flush=True)
+        
         ret, frame = cap.read()
         masks, boxes, pred_cls = get_prediction(frame, threshold)# Get predictions
-        img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) # Convert to RGB
+        # frame  = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) # Convert to RGB
 
         for i in range(len(masks)):
 
-            cv2.rectangle(img, boxes[i][0], boxes[i][1],color=CATEGORY_COLOR[pred_cls[i]], thickness=rect_th)        
-            text_width, text_height = cv2.getTextSize(pred_cls[i],cv2.FONT_HERSHEY_DUPLEX, text_size,thickness=text_th)[0]
-            cv2.rectangle(img,  boxes[i][0],  (int(boxes[i][0][0]+text_width), int(boxes[i][0][1]-text_height)), CATEGORY_COLOR[pred_cls[i]], cv2.FILLED)
-            cv2.putText(img,pred_cls[i], boxes[i][0], cv2.FONT_HERSHEY_DUPLEX, text_size, (255,255,255), thickness=text_th)
+            cv2.rectangle(frame, boxes[i][0], boxes[i][1], color=CATEGORY_COLOR[pred_cls[i]], thickness=rect_th)        
+            text_width, text_height = cv2.getTextSize(pred_cls[i], cv2.FONT_HERSHEY_DUPLEX, text_size, thickness=text_th)[0]
+            cv2.rectangle(frame,  boxes[i][0],  (int(boxes[i][0][0]+text_width), int(boxes[i][0][1]-text_height)), CATEGORY_COLOR[pred_cls[i]], cv2.FILLED)
+            cv2.putText(frame, pred_cls[i], boxes[i][0], cv2.FONT_HERSHEY_DUPLEX, text_size, (255,255,255), thickness=text_th)
 
-
-            rgb_mask = colour_masks(masks[i],pred_cls[i])
-            img = cv2.addWeighted(img, 1, rgb_mask, 0.9, 0)
+            rgb_mask = colour_masks(masks[i], pred_cls[i])
+            frame= cv2.addWeighted(frame, 1, rgb_mask, 0.9, 0)
     
         out.write(frame)
 
@@ -118,7 +129,7 @@ def video_instance_segmentation_api(video_path, threshold=0.5, rect_th=3, text_s
         # cv2.resizeWindow('Faster RCNN', 300,600)
         # cv2.imshow('Faster RCNN',frame)
 
-        if cv2.waitKey(1) & 0xFF == ord('q') or total_frame == current_frame:
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
     cap.release()
@@ -139,6 +150,6 @@ if __name__ == '__main__':
 
     CATEGORY_COLOR = dict(zip(COCO_INSTANCE_CATEGORY_NAMES, COLORS))
     
-    video_instance_segmentation_api('test.mp4', threshold=0.9, rect_th=5, text_size=1, text_th=3)
+    video_instance_segmentation_api('test.mp4', threshold=0.9, rect_th=5, text_size=1, text_th=2)
 
     print('Done')
