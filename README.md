@@ -9,11 +9,7 @@ Using VGG & Resnet in PyTorch <b>torchvision.models</b>, and train CIFAR10 datas
     - the notebook is using GPU on <b>Google colab</b>
 
 - Learning rate adjustment by <b>StepLR</b> from <b>torch.optim.lr_scheduler</b>
-    - optimizer = optim.SGD(net.parameters(), lr=0.1, momentum=0.9)
-    - scheduler = StepLR(optimizer, step_size=50, gamma=0.1)
-        - `lr=0.1` for epoch `[0,step_size=50)`
-        - `lr=0.01` for epoch `[50,100)`
-        - `lr=0.001` for epoch `[100,150)`
+
 
  
 - Result
