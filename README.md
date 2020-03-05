@@ -51,6 +51,8 @@ Using Pre-trained Faster RCNN in PyTorch <b>torchvision.models.detection</b> for
 Using Pre-trained Mask RCNN in PyTorch <b>torchvision.models.detection</b> for instance segmentation
 - instance_segmentation_image.ipynb
     - the notebook is for image and the workflow for the instance_segmentation
+- instance_segmentation_video.py
+    - instance_segmentation for the video
 
 | Image | Video |
 |:-----:|:-----:|
