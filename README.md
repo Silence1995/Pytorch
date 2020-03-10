@@ -1,5 +1,11 @@
 # Pytorch
 
+### DCGAN
+- dcgan.ipynb
+    - This notebook demonstrates this process on the Tachikara basketball custom dataset. 
+    - The following animation shows a series of images produced by the generator as it was trained .
+
+
 ### Image Classification
 
 Using VGG & Resnet in PyTorch <b>torchvision.models</b>, and train CIFAR10 dataset for image classification
