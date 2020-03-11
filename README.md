@@ -3,8 +3,13 @@
 ### DCGAN
 - dcgan.ipynb
     - This notebook demonstrates this process on the Tachikara basketball custom dataset. 
-    - The following animation shows a series of images produced by the generator as it was trained .
-
+    - The following animation shows a series of images produced by the generator as it was trained
+    
+    <img src="https://github.com/Silence1995/Pytorch/blob/master/figure/dcgan1.gif" width="450" height="350" /> 
+    
+    - Real Image  vs Fake Image
+    
+    <img src="https://github.com/Silence1995/Pytorch/blob/master/figure/dcgan2.JPG" width="550" height="250" /> 
 
 ### Image Classification
 
