@@ -73,3 +73,4 @@ Using Pre-trained Mask RCNN in PyTorch <b>torchvision.models.detection</b> for i
 - [Faster R-CNN Tutorial](https://zhuanlan.zhihu.com/p/93829453)
 - [Classfier Tutorial](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html)
 - [Instance-Segmentation Tutorial](https://www.learnopencv.com/mask-r-cnn-instance-segmentation-with-pytorch/)
+- [custom-trained-object-detection-model](https://towardsdatascience.com/build-a-custom-trained-object-detection-model-with-5-lines-of-code-713ba7f6c0fb)
